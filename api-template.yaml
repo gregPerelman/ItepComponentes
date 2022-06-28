@@ -1,0 +1,3094 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: api-apiquality
+servers:
+  - url: https://dev-api.cloudappi.net/api-apiquality/v1
+    description: Development server
+  - url: https://api.cloudappi.net/api-apiquality/v1
+    description: Production server
+tags:
+  - name: Users
+    description: 'Users registration, login, update and delete'
+  - name: Organizations
+    description: 'Organization management'
+  - name: Collections 
+    description: 'Api Collections management'
+  - name: Apis 
+    description: 'Api management'
+  - name: Configurations
+    description: 'Api Quality Configuration management'
+  - name: Rules 
+    description: 'Api Quality Rules management'
+  - name: Scans 
+    description: 'Api Quality Scans management'
+paths:
+  /user: 
+    x-apigen-binding:
+      model: User 
+    post: 
+      operationId: createUser
+      summary: Create a new user
+      description: Create a new user
+      tags:
+        - Users
+      
+        
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+            examples:
+              createUserExample:
+                $ref: '#/components/examples/userExample'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                userResponseExample:
+                  $ref: '#/components/examples/userResponseExample'
+        
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'          
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'               
+         
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+         
+    get: 
+      operationId: getUsers
+      summary: Get all users
+      description: Get all users
+      tags:
+        - Users
+        
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+              examples:
+                usersResponseExample:
+                  $ref: '#/components/examples/usersResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':  
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+      security:
+        - Bearer: []
+          
+    delete: 
+      operationId: deleteUser
+      summary: Delete a user
+      description: Delete a user
+      tags:
+        - Users
+      parameters:
+        
+        - $ref: '#/components/parameters/user_id'
+        
+      responses:
+        '200':
+          description: OK          
+        '202':
+          description: Accepted 
+
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+          
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+      security:
+        - Bearer: []
+      
+    put: 
+
+      operationId: updateUser
+      summary: Update a user
+      description: Update a user
+      tags:
+        - Users
+      parameters:
+        
+        - $ref: '#/components/parameters/user_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+            examples:
+              userExample:
+                $ref: '#/components/examples/userUpdateExample'  
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserUpdatedResponse'
+              examples:
+                userResponseExample:
+                  $ref: '#/components/examples/userResponseExample'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserUpdatedResponse'
+              examples:
+                userResponseExample:
+                  $ref: '#/components/examples/userResponseExample'
+        '204':
+          description: No Content
+        
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+          
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+          
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+      security:
+        - Bearer: []
+ 
+  /user/{user_id}: 
+    x-apigen-binding:
+      model: User 
+    get: 
+      operationId: getUser
+      summary: Get a user
+      description: Get a user
+      tags:
+        - Users
+      parameters:
+        
+        - $ref: '#/components/parameters/user_id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                userResponseExample:
+                  $ref: '#/components/examples/userResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+          
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+          
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+      security:
+        - Bearer: []
+      
+  /user/reset_password:
+    x-apigen-binding:
+      model: User 
+    post:
+      operationId: resetUserPassword
+      summary: Reset a user password
+      description: Reset a user password
+      tags:
+        - Users
+      parameters:
+        
+        - $ref: '#/components/parameters/token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserResetPassword'
+            examples:
+              userPasswordResetExample:
+                $ref: '#/components/examples/userResetPasswordExample'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContentResponse'
+
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+          
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+          
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+      security:
+        - Bearer: []
+  /user/login: 
+    x-apigen-binding:
+      model: User 
+    post:
+      operationId: loginUser
+      summary: Login a user
+      description: Login a user
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+            examples:
+              userLoginExample:
+                $ref: '#/components/examples/userLoginExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUserResponse'
+              examples:
+                userResponseExample:
+                  $ref: '#/components/examples/userLoginResponseExample' 
+        
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+          
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+               
+          
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+      security:
+        - Bearer: []     
+  
+  /user/verify_account:
+    post:
+      operationId: verifyAccount
+      summary: Verify Users account
+      description: Verify Users account
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/token'
+      responses:
+        '201': 
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardResponseResult'
+              examples:
+                userResponseExample:
+                  $ref: '#/components/examples/userResponseExample'
+  /user/email_reset_password:
+    x-apigen-binding:
+      model: User 
+    post:
+      operationId: emailResetUserPassword
+      summary: Email a user password reset
+      description: Email a user password reset
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserEmail'
+            examples:
+              userEmailResetExample:
+                $ref: '#/components/examples/userEmailResetPasswordExample'
+
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '500': 
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'  
+         
+    
+  /organization:
+    x-apigen-binding:
+      model: Organization
+    post:
+     summary: Create a new organization
+     description: Create a new organization
+     tags:
+       - Organizations    
+        
+      
+     requestBody:
+       content:
+         application/json:
+           schema:
+             $ref: '#/components/schemas/Organization'
+           examples:
+             organizationExample:
+               $ref: '#/components/examples/organizationExample'
+     responses:
+      '201':
+        description: Created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationResponse'
+            examples:
+              organizationResponseExample:
+                $ref: '#/components/examples/organizationResponseExample'
+
+      
+      '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        
+      '404':
+          $ref: '#/components/responses/NotFoundResponse'
+      '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'
+                  
+      '500': 
+          $ref: '#/components/responses/InternalServerErrorResponse'
+      '503':  
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+      default:
+          $ref: '#/components/schemas/StandardResponseResult'
+     security:
+      - Bearer: []   
+  /organization/{organization_id}: 
+    post: 
+      operationId: addUserToOrganization
+      summary: Add a user to an organization
+      description: Add a user to an organization
+      tags:
+        - Organizations
+      parameters:
+          
+          - $ref: '#/components/parameters/organization_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserToOrganization'
+            examples:
+              organizationUserExample:
+                $ref: '#/components/examples/userToOrganizationExample'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                userToOrganizationResponseExample:
+                  $ref: '#/components/examples/userResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+          
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+
+          
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+
+
+    get:
+      operationId: getOrganization
+      summary: Get an organization
+      description: Get an organization
+      tags:
+        - Organizations
+      parameters:
+        
+        - $ref: '#/components/parameters/organization_id'
+        
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
+              examples:
+                organizationResponseExample:
+                  $ref: '#/components/examples/organizationResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'          
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+      security:
+        - Bearer: []
+           
+    put:
+      operationId: updateOrganization
+      summary: Update an organization
+      description: Update an organization
+      tags:
+        - Organizations
+      parameters:
+        
+        - $ref: '#/components/parameters/organization_id'        
+          
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganization'
+            examples:
+              organizationExample:
+                $ref: '#/components/examples/organizationExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationUpdatedResponse'
+              examples:
+                organizationResponseExample:
+                  $ref: '#/components/examples/organizationResponseExample'
+        '201': 
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationUpdatedResponse'
+              examples:
+                organizationResponseExample:
+                  $ref: '#/components/examples/organizationResponseExample'
+        '204':
+          description: No Content
+        
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'          
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+      security:
+        - Bearer: [] 
+
+    delete:
+      operationId: deleteOrganization
+      summary: Delete an organization
+      description: Delete an organization
+      tags:
+        - Organizations
+      parameters:
+        
+        - $ref: '#/components/parameters/organization_id'
+            
+      responses:
+        '200':
+          description: OK
+          
+        '202':
+          description: Accepted          
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+    
+          
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult' 
+      security:
+        - Bearer: []
+           
+  
+  
+  
+  /collection:
+    x-apigen-binding:
+      model: Api_collection
+    post: 
+      operationId: createCollection
+      summary: Create collection
+      description: Create collection
+      tags:
+        - Collections
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Collection'
+            examples:
+              collectionExample:
+                $ref: '#/components/examples/collectionExample'
+
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionResponse'
+              examples:
+                collectionResponseExample:
+                  $ref: '#/components/examples/collectionResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    get:
+      operationId: getCollection
+      summary: Get collection
+      description: Get collection
+      tags:
+        - Collections
+      parameters:
+        
+        - $ref: '#/components/parameters/organization_id_query'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+              examples:
+                collectionResponseExample:
+                  $ref: '#/components/examples/collectionResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    put:
+      operationId: updateCollection
+      summary: Update collection
+      description: Update collection
+      tags:
+        - Collections
+      parameters:
+        
+        - $ref: '#/components/parameters/collection_id_query'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Collection'
+            examples:
+              collectionExample:
+                $ref: '#/components/examples/collectionExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionUpdatedResponse'
+              examples:
+                collectionResponseExample:
+                  $ref: '#/components/examples/collectionResponseExample'
+        '201':
+          description: Created 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionResponse'
+              examples:
+                collectionResponseExample:
+                  $ref: '#/components/examples/collectionResponseExample'
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+  /collection/{collection_id}:
+    delete:
+      operationId: deleteCollection
+      summary: Delete collection
+      description: Delete collection
+      tags:
+        - Collections
+      parameters:
+        
+        - $ref: '#/components/parameters/collection_id_path'
+      responses:
+        '200':
+          description: OK
+          
+        '202':
+          description: Accepted
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+  
+  
+  /api: 
+    x-apigen-binding:
+      model: Api
+    post:
+      operationId: addApiToCollection
+      summary: Add API to collection
+      description: Add API to collection
+      tags:        
+        - Apis
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Api'
+
+            examples:  
+              apiCreateExample:           
+                $ref: '#/components/examples/apiCreateExample'
+          
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiAddedToCollectionResponse'
+              examples:
+                apiExample:
+                  $ref: '#/components/examples/apiExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    get:
+      operationId: getCollectionApis
+      summary: Get APIs from collection
+      description: Get APIs from collection
+      tags:
+        - Apis
+      parameters:
+        
+        - $ref: '#/components/parameters/collection_id_query'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApisInCollection'
+              examples:
+                apisInCollectionExample:
+                  $ref: '#/components/examples/apisInCollectionExample'
+
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'   
+  /api/{apiId}:
+    x-apigen-binding:
+      model: Api
+    get: 
+      operationId: getApiFromCollection
+      summary: Get API from collection
+      description: Get API from collection
+      tags:
+        - Apis
+      parameters:
+        
+        - $ref: '#/components/parameters/collection_id_query'
+        - $ref: '#/components/parameters/api_id_path'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiInCollection'
+              examples:
+                apiExample:
+                  $ref: '#/components/examples/apiExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    put: 
+      operationId: updateApiInCollection
+      summary: Update API in collection
+      description: Update API in collection
+      tags:
+        - Apis
+      parameters:
+        
+        - $ref: '#/components/parameters/collection_id_query'
+        - $ref: '#/components/parameters/api_id_path'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateApiInCollection'
+            example:
+              name: apiqualityv2
+              version: 2.0.0
+              file:
+                filename: apiqualityv2.yaml
+                contentType: application/yaml
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiInCollectionUpdatedResponse'
+              examples:
+                apiExample:
+                  $ref: '#/components/examples/apiExample'
+        
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    delete:
+      operationId: removeApiFromCollection
+      summary: Remove API from collection
+      description: Remove API from collection
+      tags:
+        - Apis
+      parameters:
+        - $ref: '#/components/parameters/api_id_path'
+      responses:
+        '200':
+          description: OK
+          
+        '202':
+          description: Accepted
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+  /configuration:
+    x-apigen-binding:
+      model: Api_quality_conf
+    post: 
+      operationId: createQualityConfiguration
+      summary: Create quality configuration
+      description: Create quality configuration
+      tags:
+        - Configurations
+      
+        
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Configuration'
+            examples:
+              configurationExample:
+                $ref: '#/components/examples/configurationExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuration'
+              examples:
+                configurationResponseExample:
+                  $ref: '#/components/examples/configurationResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    get: 
+      operationId: getConfiguration
+      summary: Get quality configuration
+      description: Get quality configuration
+      tags:
+        - Configurations
+      parameters:
+        
+        - $ref: '#/components/parameters/configuration_id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuration'
+              examples:
+                configurationResponseExample:
+                  $ref: '#/components/examples/configurationResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    delete:
+      operationId: deleteConfiguration
+      summary: Delete quality configuration
+      description: Delete quality configuration
+      tags:
+        - Configurations
+      parameters:
+        
+        - $ref: '#/components/parameters/configuration_id'
+      responses:
+        '200':
+          description: OK
+          
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    put:
+      operationId: updateConfiguration
+      summary: Update quality configuration
+      description: Update quality configuration
+      tags:
+        - Configurations
+      parameters:
+        
+        - $ref: '#/components/parameters/configuration_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Configuration'
+            examples:
+              configurationExample:
+                $ref: '#/components/examples/configurationExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuration'
+              examples:
+                configurationResponseExample:
+                  $ref: '#/components/examples/configurationResponseExample'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuration'
+              examples:
+                configurationResponseExample:
+                  $ref: '#/components/examples/configurationResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+  /rule:
+    x-apigen-binding:
+      model: Rule 
+    post: 
+      operationId: createQualityRule
+      summary: Create quality rule
+      description: Create quality rule
+      tags:
+        - Rules
+      
+        
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rule'
+            examples:
+              ruleExample:
+                $ref: '#/components/examples/ruleExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+              examples:
+                ruleResponseExample:
+                  $ref: '#/components/examples/ruleResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    get:
+      operationId: getQualityRules
+      summary: Get quality rules
+      description: Get quality rules
+      tags:
+        - Rules
+      
+        
+        
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rules'
+              examples:
+                arrayOfRulesResponseExample:
+                  $ref: '#/components/examples/arrayOfRulesResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    delete:
+      operationId: deleteQualityRule
+      summary: Delete quality rule
+      description: Delete quality rule
+      tags:
+        - Rules
+      parameters:
+        
+        - $ref: '#/components/parameters/rule_id_query'
+      responses:
+        '200':
+          description: OK
+          
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    put:
+      operationId: updateQualityRule
+      summary: Update quality rule
+      description: Update quality rule
+      tags:
+        - Rules
+      parameters:
+        
+        - $ref: '#/components/parameters/rule_id_query'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rule'
+            examples:
+              ruleExample:
+                $ref: '#/components/examples/ruleExample'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+              examples:
+                ruleResponseExample:
+                  $ref: '#/components/examples/ruleResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+
+  /rule/{rule_id}:
+    x-apigen-binding:
+      model: Rule 
+    get:
+      operationId: getQualityRule
+      summary: Get quality rule
+      description: Get quality rule
+      tags:
+        - Rules
+      parameters:
+        
+        - $ref: '#/components/parameters/rule_id_path'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+              examples:
+                ruleResponseExample:
+                  $ref: '#/components/examples/ruleResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+         
+  /scan:
+    x-apigen-binding:
+      model: Api_scanner 
+    post:
+      operationId: createApiScan
+      summary: Create API scan
+      description: Create API scan
+      tags:
+        - Scans
+      parameters:
+        
+        - $ref: '#/components/parameters/api_id_query'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanCreation'
+            examples:
+              scanCreationExample:
+                $ref: '#/components/examples/scannerCreationExample'      
+     
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scan'
+              examples:
+                scannerResponseExample:
+                  $ref: '#/components/examples/scannerResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    get:
+      operationId: getApiScans
+      summary: Get API scans
+      description: Get API scans
+      tags:
+        - Scans
+      parameters:
+        
+        - $ref: '#/components/parameters/scan_id_query'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scans'
+              examples:
+                scannerResponseExample:
+                  $ref: '#/components/examples/scannerResponseExample'
+
+              
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    put:
+      operationId: updateApiScan
+      summary: Update API scan
+      description: Update API scan
+      tags:
+        - Scans
+      parameters:
+        
+        - $ref: '#/components/parameters/scan_id_query'
+        
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Scan'
+            examples:
+              scannerResponseExample:
+                $ref: '#/components/examples/scannerCreationExample'
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scan'
+              examples:
+                scannerResponseExample:
+                  $ref: '#/components/examples/scannerResponseExample'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+    delete:
+      operationId: deleteApiScan
+      summary: Delete API scan
+      description: Delete API scan
+      tags:
+        - Scans
+      parameters:
+        
+        - $ref: '#/components/parameters/scan_id_query'
+        
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scan'
+              
+          
+        '400':
+          $ref: '#/components/responses/BadRequestResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse'
+          
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse'
+          
+        '404':
+          $ref: '#/components/responses/NotFoundResponse'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaTypeResponse'  
+        '500':
+          $ref: '#/components/responses/InternalServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableResponse'
+        default:
+          $ref: '#/components/schemas/StandardResponseResult'
+security:
+  - api_auth: []
+      
+            
+
+components:
+  headers:  
+    
+    x-status-code:
+      description: Status code
+      schema:
+        type: integer
+        format: int32
+        example: 200
+    
+    x-trace-id:
+      description: Trace ID
+      schema:
+        type: string
+        example: 'f0a0a0a0-a0a0-a0a0-a0a0-a0a0a0a0a0a0'
+    x-request-id:
+      description: Request ID
+      schema:
+        type: string
+        example: 'f0a0a0a0-a0a0-a0a0-a0a0-a0a0a0a0a0a0'
+    x-response-time:
+      description: Response time
+      schema:
+        type: string
+        format: date-time
+        example: '2020-05-05T17:00:00.000Z'
+    location: 
+      description: Location
+      schema:
+        type: string
+        example: 'https://api.example.com/v1/scans/{scan_id}'
+
+    
+  parameters:
+    token:
+      name: token
+      in: query
+      description: Custom Token
+      required: true
+      schema:
+        type: string
+        example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+    
+    user_id: 
+      name: user_id
+      in: path
+      description: keycloak's User ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: 'f0a0a0a0-a0a0-a0a0-a0a0-a0a0a0a0a0a0'
+
+       
+    user_email:
+      name: user_email
+      in: query
+      description: User email
+      required: true
+      example: johndoe@cloudappi.net
+      schema:
+        type: string
+        format: email
+    
+    organization_id:
+      name: organization_id
+      in: path
+      description: Organization`s keycloak ID
+      required: true
+      example: f0a0a0a0-a0a0-a0a0-a0a0-a0a0a0a0a0a0
+      schema:
+        type: string
+        format: uuid
+    organization_id_query:
+      name: organization_id_query
+      in: query
+      description: Organization`s keycloak ID
+      required: true
+      example: f0a0a0a0-a0a0-a0a0-a0a0-a0a0a0a0a0a0
+      schema:
+        type: string
+        format: uuid
+    collection_id_path: 
+      name: collection_id_path
+      in: path
+      description: Collection ID
+      required: true
+      example: 50b94297-dc42-4d16-9408-d719979599fe
+      schema:
+        type: string
+        format: uuid
+    collection_id_query: 
+      name: collection_id_query
+      in: query
+      description: Collection ID
+      required: true
+      example: 50b94297-dc42-4d16-9408-d719979599fe
+      schema:
+        type: string
+        format: uuid
+    api_id_path: 
+      name: api_id_path
+      in: path
+      description: API ID
+      required: true
+      example: 50b94297-dc42-4d16-9408-d719979599fe
+      schema:
+        type: string
+        format: uuid
+    
+    api_id_query:
+      name: api_id_query
+      in: query
+      description: API ID
+      required: true
+      example: 50b94297-dc42-4d16-9408-d719979599fe
+      schema:
+        type: string
+        format: uuid
+    configuration_id:
+      name: configuration_id
+      in: query
+      description: Configuration ID
+      required: true
+      example: 50b94297-dc42-4d16-9408-d719979599fe
+      schema:
+        type: string
+        format: uuid
+    rule_id_query:
+      name: rule_id_query
+      in: query
+      description: Rule ID
+      required: true
+      example: 50b94297-dc42-4d16-9408-d719979599fe
+      schema:
+        type: string
+        format: uuid  
+    rule_id_path:
+      name: rule_id_path
+      in: path
+      description: Rule ID
+      required: true
+      example: 50b94297-dc42-4d16-9408-d719979599fe
+      schema:
+        type: string
+        format: uuid  
+    scan_id_path:
+      name: scan_id_path
+      in: path
+      description: Scan ID
+      required: true
+      example: 50b94297-dc42-4d16-9408-d719979599fe
+      schema:
+        type: string
+        format: uuid   
+
+
+    scan_id_query:
+      name: scan_id_query
+      in: query
+      description: Scan ID
+      required: true
+      example: 50b94297-dc42-4d16-9408-d719979599fe
+      schema:
+        type: string
+        format: uuid
+
+  schemas:
+    StandardResponseResult:       
+      properties:
+        status:
+          type: boolean
+          example: true
+        http_code:
+          type: integer
+          format: int32
+          example: 200
+        trace_id:
+          type: string
+          format: uuid
+          example: 'f0a0a0a0-a0a0-a0a0-a0a0-a0a0a0a0a0a0'
+        request_id:
+          type: string
+          format: uuid
+          example: 'f0a0a0a0-a0a0-a0a0-a0a0-a0a0a0a0a0a0'
+        response_time:
+          type: string
+          format: date-time
+          example: '2020-05-05T17:00:00.000Z'
+        location:
+          type: string
+          format: uri
+          example: 'https://api.example.com/v1/scans/{scan_id}'
+        message:
+          type: string
+          example: 'Success'          
+        
+        num_elements:
+          type: integer
+          format: int32
+          example: 1
+      required:
+        - status
+        - http_code
+        - trace_id
+    HeadersResponse:
+      properties:
+        headers:
+          type: object
+          properties:
+
+            x-status-code:
+              $ref: '#/components/headers/x-status-code'
+            x-trace-id:
+              $ref: '#/components/headers/x-trace-id'
+            x-request-id:
+              $ref: '#/components/headers/x-request-id'
+            x-response-time:
+              $ref: '#/components/headers/x-response-time'
+            location:
+              $ref: '#/components/headers/location'
+    Error:
+      description: Standard error response
+      type: object
+      properties:
+        code:
+          type: string
+          pattern: /^[A-Z]{3}\d{4}$/
+          description: Internal error code
+          example: GEN0000
+        message:
+          type: string
+          example: 'Internal error'
+          
+      required:
+      - code
+      - message
+    ErrorResponse:
+      type: object      
+      properties:
+        status:
+          type: boolean
+          description: Status request  
+          example: false
+        http_code:
+          type: integer
+          format: int32
+          description: http code response
+          example: 400
+        info:
+          type: string
+          description: Info message
+          example: 'Bad request'
+        
+      required:
+      - status
+      - http_code      
+      - info
+    StandardResponse:
+      type: object      
+      properties:
+        status:
+          type: boolean
+          description: Status request  
+          example: true
+        http_code:
+          type: integer
+          format: int32
+          description: http code response
+          example: 200
+        info:
+          type: string
+          description: Info message
+          example: 'Accepted'
+        
+      required:
+      - status
+      - http_code      
+      - info  
+    StandardError:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 1003
+        message:
+          type: string
+          example: Attribute with value greater than maximum
+    
+        
+    User:
+      
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          example: true
+        username:
+          description: Email of the user registering
+          type: string
+          format: email
+          example: sdvez@gmail.com  
+        emailVerified:
+          description: Email of the user registering
+          type: boolean
+          example: true
+        firstName:
+          type: string
+          example: John Doe
+          maxLength: 255
+        lastName:
+          type: string
+          example: Doe
+          maxLength: 255
+        password:
+          description: The password for the user you want to register.
+          type: string
+          maxLength: 256
+          minLength: 6
+          pattern: ^[\w-]+$
+          example: df/nGisf23-sdfH8s?dfuc
+      required:
+        - username
+        - password
+    UserUpdate:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: John
+          maxLength: 255
+        lastName:
+          type: string
+          example: Doe
+          maxLength: 255
+    UserToOrganization:
+      type: object
+      properties:
+        username:
+          type: string
+          example: dario@gmail.com
+    UserResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponseResult'
+        - $ref: '#/components/schemas/HeadersResponse'
+      type: object
+      properties:
+        id:
+          type: string
+          example: 'f0a0a0a0-a0a0-a0a0-a0a0-a0a0a0a0a0a0'        
+        username:
+          description: Email of the user registering
+          type: string
+          format: email
+          example: sdvez@gmail.com 
+
+        name:
+          type: string
+          example: John Doe
+          maxLength: 255
+        last_name:
+          type: string
+          example: Doe
+          maxLength: 255
+                
+        created_at:
+          type: string
+          format: date-time
+          example: 2020-05-05T17:00:00.000Z 
+        updated_at:
+          type: string
+          format: date-time
+          example: 2020-05-05T17:00:00.000Z
+
+        organization_id:
+          type: string
+          format: uuid
+          example: 'f0a0a0a0-a0a0-a0a0-a0a0-a0a0a0a0a0a0'
+
+    LoginUser:  
+      type: object
+      properties:
+        username:
+          type: string
+          format: email
+          example: ivjsfd9843@gmail.com                  
+        password:
+          type: string
+          format: password
+          minLength: 6
+          maxLength: 256
+          pattern: ^[\w-]+$
+          example: df/nGisf23-sdfH8s?dfuc
+    
+    LoginUserResponse:
+      type: object
+      properties:
+        acces_token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        expires_in:
+          type: integer
+          format: int32
+          example: 3600
+        refresh_expires_in:
+          type: integer
+          format: int32
+          example: 604800
+        refresh_token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        token_type:
+          type: string
+          example: Bearer
+        not-before-policy:
+          type: integer
+          format: int32
+          example: 0
+        session_state:
+          type: string
+          example: c0e8f8a0-a0a0-a0a0-a0a0-a0a0a0a0a0a0
+        scope:
+          type: string
+          example: openid
+        
+    UserUpdatedResponse:      
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserResponse'
+        updated_at:
+          type: string
+          format: date-time 
+    UserResetPassword:
+      type: object
+      properties:
+        value:
+          type: string
+          format: password
+          example: 8934njvd89c90.sadu8
+    UserEmail: 
+      type: object
+      properties:
+        username:
+          type: string
+          format: email
+          example: dario.garcia@gmail.com 
+    Organization:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Google
+          minLength: 1
+          maxLength: 255
+          description: Name of the organization
+          pattern: ^[\w-]+$
+        
+        
+    OrganizationResponse: 
+      allOf:
+        - $ref: '#/components/schemas/StandardResponseResult'
+      type: object
+      properties:
+        id:
+          type: string
+          example: 'f0a0a0a0-a0a0-a0a0-a0a0-a0a0a0a0a0a0'
+          
+        name:
+          type: string
+          example: Google
+          minLength: 1
+          maxLength: 255
+          description: Name of the organization
+          pattern: ^[\w-]+$
+        
+        created_at:
+          type: string
+          format: date-time
+          example: 2020-05-01T00:00:00.000Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2020-05-01T00:00:00.000Z
+      
+    UpdateOrganization: 
+      type: object
+      properties:
+        name:
+          type: string
+          example: Google
+          minLength: 1
+          maxLength: 255
+          description: Name of the organization
+          pattern: ^[\w-]+$
+         
+    OrganizationUpdatedResponse:       
+      type: object
+      properties:
+        organization:
+          $ref: '#/components/schemas/OrganizationResponse'
+        updated_at:
+          type: string
+          format: date-time
+          example: 2020-05-01T00:00:00.000Z
+
+    Collection: 
+      type: object
+      properties:
+        id:
+          description: Id of the collection
+          type: string
+          format: uuid
+          example: b8240028-8df4-4019-8b03-182a0a9bc88d
+
+        name:
+          description: Name of the collection of APIs
+          type: string        
+          example: Google APIs
+          maxLength: 256
+          minLength: 1
+          pattern: ^[\w-]+$
+
+        organization_id:
+          description: Id of the organization that owns the collection
+          type: string
+          format: uuid
+          example: b8240028-8df4-4019-8b03-182a0a9bc88d
+      required:
+        - name
+        - organization_id
+
+
+        
+    CollectionResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponseResult'
+      type: object
+      properties:
+        collection:
+          $ref: '#/components/schemas/Collection'
+        created_at:
+          type: string
+          format: date-time
+          example: 2020-05-01T00:00:00.000Z
+
+    
+    CollectionUpdatedResponse:
+      type: object
+      properties:
+        collection:
+          $ref: '#/components/schemas/CollectionResponse'
+        updated_at:
+          type: string
+          format: date-time
+          example: 2020-05-01T00:00:00.000Z   
+    
+    Api:
+      description: API doc in git repository along with its postman collection
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: b8240028-8df4-4019-8b03-182a0a9bc88d
+        name:
+          type: string
+          example: Google Maps API
+          maxLength: 256
+          minLength: 1
+          pattern: ^[\w-]+$
+        
+        base_path:
+          type: string
+          example: https://maps.googleapis.com
+          maxLength: 256
+          minLength: 1
+          pattern: ^[\w-]+$
+
+        version:
+          type: string
+          example: v1
+          maxLength: 256
+          minLength: 1
+          pattern: ^[\w-]+$
+
+        git_repository_url:
+          type: string
+          example: https://gitlab.com/cloudappi/api-template.yaml
+
+        type:
+          type: string
+          enum:
+            - openapi 3.0.2
+            - swagger 2.0
+            
+          
+        postman_collection_uri:
+          description: URI of the postman collection document
+          type: string
+          format: uri
+          example: https://www.getpostman.com/collections/b8240028-8df4-4019-8b03-182a0a9bc88d
+
+        collection_id:
+          type: number
+          example: b8240028
+
+      required:
+        - name
+        - base_path
+        - version
+        - type
+        - collection_id
+
+       
+    ApiAddedToCollectionResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponseResult'
+      type: object
+      properties:
+        api:
+          $ref: '#/components/schemas/Api'
+        
+    ApisInCollection: 
+      allOf:
+        - $ref: '#/components/schemas/StandardResponseResult'
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Api"
+        
+    ApiInCollection:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponseResult'
+      type: object
+      properties:
+        api:
+          $ref: '#/components/schemas/Api'
+    UpdateApiInCollection:
+      
+      type: object
+      properties:
+        api:
+          $ref: '#/components/schemas/Api'
+    ApiInCollectionUpdatedResponse:
+      allOf:
+        - $ref: '#/components/schemas/StandardResponseResult'
+      type: object
+      properties:
+        api:
+          $ref: '#/components/schemas/Api'
+        updated_at:
+          type: string
+          format: date-time
+          example: 2020-05-01T00:00:00.000Z
+    
+    Configuration:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: b8240028-8df4-4019-8b03-182a0a9bc88d
+
+        name:
+          type: string
+          example: Google Maps API Configuration
+          maxLength: 256
+          minLength: 1
+          pattern: ^[\w-]+$
+
+        collection_id:
+          $ref: "#/components/schemas/Collection"  
+    Rule: 
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+        type:
+          type: string     
+        severity:
+          type: string
+        tag: 
+          type: array
+          items:
+            type: string
+        security_category:
+          type: string
+        
+        user_created_id:
+          type: string
+        
+        configuration:
+          $ref: "#/components/schemas/Configuration"
+    Rules:
+      type: array
+      properties:
+        total: 
+          type: integer
+          format: int32
+          example: 2
+        items:
+          $ref: "#/components/schemas/Rule"
+        
+    Scan: 
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: b8240028-8df4-4019-8b03-182a0a9bc88d
+        api_doc_url:
+          type: string
+          format: uri
+          example: https:// www.gitlab.com/cloudappi/api-template.yaml
+        
+        bugs: 
+          $ref: "#/components/schemas/Rules"        
+        user_created_id:
+          $ref: "#/components/schemas/User"
+        api_id:
+          $ref: "#/components/schemas/Api"
+    ScanCreation: 
+      type: object
+      properties:
+        api_doc_url:
+          type: string
+          format: uri
+          example: https://www.gitlab.com/cloudappi/api-template.yaml
+        
+    Scans: 
+      type: array
+      properties:
+        total: 
+          type: integer
+          format: int32
+          example: 2
+        items:
+          $ref: "#/components/schemas/Scan" 
+  examples:
+    userExample: 
+      summary: Creates or modifies a user
+      value: 
+        enabled: true
+        username: johndoe@cloudappi.net
+        emailVerified: true
+        firstName: John
+        lastName: Doe                          
+        password: nvfdHJñe7v-sdGndd 
+    userUpdateExample:
+      summary: Updates a user
+      value: 
+        firstName: John
+        lastName: Doe  
+    userToOrganizationExample:
+      summary: Adds a user to an organization
+      value: 
+        username: dario@gmail.com 
+
+    userResponseExample:
+      summary: Response of the user creation or modification
+      value: 
+        id: b8240028-8df4-4019-8b03-182a0a9bc88d
+        username: johndoe@cloudappi.net           
+        name: John 
+        last_name: Doe         
+        created_at: 2020-05-01T00:00:00.000Z        
+        updated_at: 2020-05-01T00:00:00.000Z 
+        organization_id: b8240028-8df4-4019-8b03-182a0a9bc88d
+    usersResponseExample:
+      summary: Response of the user list
+      value: 
+        
+        data:
+          - id: b8240028-8df4-4019-8b03-182a0a9bc88d
+            name: John
+            last_name: Doe
+            email: johndoe@cloudappi.net
+            created_at: 2020-05-01T00:00:00.000Z
+            updated_at: 2020-05-01T00:00:00.000Z
+          - id: shnccui7028-8df4-4019-8b03-182a0
+            name: Xavier
+            last_name: Shrute
+            email: xshrute@cloudappi.net
+            created_at: 2020-05-01T00:00:00.000Z
+            updated_at: 2020-05-01T00:00:00.000Z
+
+    userLoginExample:
+      summary: Login of a user
+      value: 
+        email: johndoe@cloudappi.net
+        password: nvfdHJñe7v-sdGndd
+    userLoginResponseExample:
+      summary: Response of the user login
+      value: 
+        acces_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        expires_in: 3599
+        refresh_expires_in: 604800
+        refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        token_type: Bearer
+        not-before-policy: 0
+        session_state: shnccui7028-8df4-4019-8b03-182a0
+        scope: openid
+    userResetPasswordExample:
+      summary: Reset password of a user
+      value: 
+        value: v8943.fdguivd7mkvfd8.dvf
+    userEmailResetPasswordExample:
+      summary: Send email to reset password of a user
+      value: 
+        username: dario.garcia@cloudappi.net
+
+    organizationExample: 
+      summary: Creates or modifies an organization
+      value: 
+        name: CloudAppi
+        
+        
+    organizationResponseExample:
+      summary: Response of the organization creation or modification
+      value: 
+        id: b8240028-8df4-4019-8b03-182a0a9bc88d
+        name: CloudAppi
+        created_at: 2020-05-01T00:00:00.000Z
+        updated_at: 2020-05-01T00:00:00.000Z
+    collectionExample:
+      summary: Creates or modifies a collection
+      value: 
+        name: Google Maps API
+        organization_id: b8240028-8df4-4019-8b03-182a0a9bc88d
+    collectionResponseExample:
+      summary: Response of the collection creation or modification
+      value: 
+        id: b8240028-8df4-4019-8b03-182a0a9bc88d
+        name: Google Maps API
+        created_at: 2020-05-01T00:00:00.000Z
+        updated_at: 2020-05-01T00:00:00.000Z
+        organization_id: b8240028-8df4-4019-8b03-182a0a9bc88d
+    apiExample:
+      summary: Creates or modifies an api
+      value: 
+        id: b8240028-8df4-4019-8b03-182a0a9bc88d
+        name: ApiQuality 
+        base_path: /api-apiquality/v1/
+        version: v1
+        git_repository_url: https://gitlab.com/cloudappi/api-template.yaml
+        type: openapi 3.0.2 
+        postman_collection_url: https://www.getpostman.com/collections/b8240028-8df4-4019-8b03-182a0a9bc88d
+        collection_id: b8240028-8df4-4019-8b03-182a0a9bc88d
+        created_at : 2020-05-01T00:00:00.000Z
+        updated_at : 2020-05-01T00:00:00.000Z
+    apiCreateExample:
+      summary: Creates an Api project
+      value: 
+        name: ApiQuality
+        base_path: www.apiquality.com/v1/
+        version: v1
+        type: openapi 3.0.2
+        collection_id: 546547657567
+
+
+    apisInCollectionExample:
+      summary: Response of the api list
+      value: 
+        
+        data:
+          - id: b8240028-8df4-4019-8b03-182a0a123csad
+            name: ApiQuality2
+            base_path: /api-apiquality/v2/
+            version: v2
+            git_repository_url: https://gitlab.com/cloudappi/api-template2yaml
+            type: REST
+            postman_collection_uri: https://www.getpostman.com/collections/b8240028-8df4-4019-8b03-182a0a9bc88d
+            collection_id: b8240028-8df4-4019-8b03-182a0a9bc88d
+            created_at : 2020-05-01T00:00:00.000Z
+            updated_at : 2020-05-01T00:00:00.000Z
+          - id: b8240028-8df4-4019-8b03-182a0a9bc88d
+            name: ApiQuality
+            base_path: /api-apiquality/v1/
+            version: v1
+            git_repository_url: https://gitlab.com/cloudappi/api-template.yaml
+            type: REST
+            postman_collection_uri: https://www.getpostman.com/collections/b8240028-8df4-4019-8b03-182a0a9bc88d
+            collection_id: b8240028-8df4-4019-8b03-182a0a9bc88d
+            created_at : 2020-05-01T00:00:00.000Z
+            updated_at : 2020-05-01T00:00:00.000Z
+
+    configurationExample:
+      summary: Creates or modifies a configuration
+      value: 
+        name: Google Maps API Configuration
+        collection_id: b8240028-8df4-4019-8b03-182a0a9bc88d
+    configurationResponseExample:
+      summary: Response of the configuration creation or modification
+      value: 
+        id: b8240028-8df4-4019-8b03-182a0a9bc88d
+        name: Google Maps API Configuration
+        collection_id: b8240028-8df4-4019-8b03-182a0a9bc88d
+        created_at: 2020-05-01T00:00:00.000Z
+        updated_at: 2020-05-01T00:00:00.000Z
+    ruleExample:
+      summary: Creates or modifies a quality rule for sonarqube
+      value: 
+        name: An example must be provided
+        value: OAR031
+        type: bug
+        severity: critical
+        tag:
+          - bad-practice
+          - clumsy
+        security_category: SonarSource
+        configuration_id: 1435bhj.asYpijUN
+    ruleResponseExample:
+      summary: Response of the rule creation or modification
+      value: 
+        id: b8240028-8df4-4019-8b03-182a0a9bc88d
+        name: An example must be provided
+        value: OAR031
+        type: bug
+        severity: critical
+        tag:
+          - bad-practice
+          - clumsy
+        security_category: SonarSource
+        configuration_id: 1435bhj.asYpijUN
+        created_at: 2020-05-01T00:00:00.000Z
+        updated_at: 2020-05-01T00:00:00.000Z
+    arrayOfRulesResponseExample:
+      summary: Response of the rule creation or modification
+      value: 
+        total: 2
+        data:
+          - id: b8240028-8df4-4019-8b03-182a0a9bc88d
+            name: An example must be provided
+            value: OAR031
+            type: bug
+            severity: critical
+            tag:
+              - bad-practice
+              - clumsy
+            security_category: SonarSource
+            configuration_id: 1435bhj.asYpijUN
+            created_at: 2020-05-01T00:00:00.000Z
+            updated_at: 2020-05-01T00:00:00.000Z
+          - id: b8240028-8df4-4019-8b03-182a0a9bc88d
+            name: An example must be provided
+            value: OAR031
+            type: bug
+            severity: critical
+            tag:
+              - bad-practice
+              - clumsy
+            security_category: SonarSource
+            configuration_id: 1435bhj.asYpijUN
+            created_at: 2020-05-01T00:00:00.000Z
+            updated_at: 2020-05-01T00:00:00.000Z
+
+    scannerCreationExample:
+      summary: Providing the URI of the API to be scanned
+      value: 
+        api_doc_url: https://gitlab.com/cloudappi/api-template.yaml
+    scannerResponseExample:
+      summary: Response of the scanner creation or modification
+      value: 
+        id: 1
+        api_id: 093jnfsd.asYpijUN
+        api_doc_url: https:// www.gitlab.com/cloudappi/api-template.yaml
+        bugs:
+          - id: 1
+            name: An example must be provided
+            value: OAR031
+            type: vulnerability
+            severity: critical
+            tag:
+              - bad-practice
+              - clumsy
+            security_category: SonarSource
+            configuration_id: 1435bhj.asYpijUN
+            created_at: 2020-05-05T17:00:00.000Z
+          - id: 2
+            name: An example must be provided
+            value: OAR033
+            type: bug
+            severity: critical
+            tag:
+              - bad-practice
+              - clumsy
+            security_category: SonarSource
+            configuration_id: 1435bhj.asYpijUN
+            created_at: 2020-05-05T17:00:00.000Z
+        created_at: 2020-05-05T17:00:00.000Z
+  securitySchemes:
+    Bearer:
+      type: oauth2
+      description: The security definitions for this API. Please check individual operations for applicable scopes.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://keycloak.cloudappi.net/auth/realms/Api-quality/protocol/openid-connect/auth 
+          tokenUrl: https://keycloak.cloudappi.net/auth/realms/Api-quality/protocol/openid-connect/token
+          
+  
+  
+  
+  responses:   
+    UserResponse:
+      description: User response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserResponse'  
+    CreatedResponse:
+      description: Created response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StandardResponse'
+          example:
+            http_code: 201
+            info: The request has suscessfully created a new resource
+            status: true
+    OKResponse:
+      description: OK response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StandardResponse'
+          example:
+            http_code: 200
+            info: The request has been suscessfully processed
+            status: true
+    AcceptedResponse:
+      description: Accepted response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StandardResponse'
+          example:
+            http_code: 202
+            info: The request has been accepted for processing
+            status: true
+    NoContentResponse:
+      description: NoContent response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StandardResponse'
+          example:
+            http_code: 204
+            info: The request has been successfully processed but no content is returned
+            status: true            
+    UnauthorizedResponse:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/HeadersResponse'
+              - $ref: '#/components/schemas/ErrorResponse'              
+              
+          example:            
+            status: false
+            http_code: 401
+            info: The request requires user authentication
+    ForbiddenResponse:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/HeadersResponse'
+              - $ref: '#/components/schemas/ErrorResponse'
+          example:            
+            status: false
+            http_code: 403
+            info: The server understood the request, but is refusing to fulfill it
+
+    InternalServerErrorResponse:
+      description: Internal Server error
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/HeadersResponse'
+              - $ref: '#/components/schemas/ErrorResponse'
+          example:            
+            status: false
+            http_code: 500
+            info: The server encountered an unexpected condition which prevented it from fulfilling the request
+
+    BadRequestResponse:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/HeadersResponse'
+              - $ref: '#/components/schemas/ErrorResponse'
+          example:            
+            status: false
+            http_code: 400
+            info: The request could not be understood by the server due to malformed syntax
+    UnsupportedMediaTypeResponse:
+      description: Unsupported Media Type
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/HeadersResponse'
+              - $ref: '#/components/schemas/ErrorResponse'
+          example:            
+            status: false
+            http_code: 415
+            info: Unsupported Media Type
+    ServiceUnavailableResponse:
+      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/HeadersResponse'
+              - $ref: '#/components/schemas/ErrorResponse'
+          example:            
+            status: false
+            http_code: 503
+            info: Service Unavailable
+    NotFoundResponse:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/HeadersResponse'
+              - $ref: '#/components/schemas/ErrorResponse'
+          example:            
+            status: false
+            http_code: 404
+            info: The requested resource was not found
+        
+  x-apigen-models:
+    User:
+      relational-persistence:
+        table: users
+      attributes:
+        - name: id
+          type: String
+          relational-persistence:
+            primary-key: true
+            autogenerated: true
+        - name: name
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: last_name
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: email
+          type: String
+          validations:
+            - type: NotEmpty
+            - type: Email
+        - name: password
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: role
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: active
+          type: Boolean
+          validations:
+            - type: NotEmpty
+        - name: created_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: updated_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: deleted_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: deleted
+          type: Boolean
+          validations:
+            - type: NotEmpty
+        - name: organization_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: organization_id
+            foreign-table: organizations
+    Organization:
+      relational-persistence:
+        table: organizations
+      attributes:
+        - name: id
+          type: String
+          relational-persistence:
+            primary-key: true
+            autogenerated: true
+        - name: name
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: email
+          type: String
+          validations:
+            - type: NotEmpty
+            - type: Email
+        - name: password
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: active
+          type: Boolean
+          validations:
+            - type: NotEmpty
+        - name: created_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: updated_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: deleted
+          type: Boolean
+          validations:
+            - type: NotEmpty
+    Api_collection:
+      relational-persistence:
+        table: api_collections
+      attributes:
+        - name: id
+          type: String
+          relational-persistence:
+            primary-key: true
+            autogenerated: true
+        - name: name
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: created_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: user_created_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: user_created_id
+            foreign-table: users        
+        - name: user_modified_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: user_modified_id
+            foreign-table: users
+        - name: updated_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: deleted
+          type: Boolean
+          validations:
+            - type: NotEmpty
+        - name: organization_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: organization_id
+            foreign-table: organizations
+    Api_quality_conf:
+      relational-persistence:
+        table: api_quality_confs
+      attributes:
+        - name: id
+          type: String
+          relational-persistence:
+            primary-key: true
+            autogenerated: true
+        - name: name
+          type: String
+          validations:
+            - type: NotEmpty
+               
+        - name: created_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: updated_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: user_created_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: user_created_id
+            foreign-table: users        
+        - name: user_modified_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: user_modified_id
+            foreign-table: users        
+        - name: deleted
+          type: Boolean
+          validations:
+            - type: NotEmpty
+        - name: api_collections_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: api_collections_id
+            foreign-table: api_collections 
+    Rule:
+      relational-persistence:
+        table: rules
+      attributes:
+        - name: id
+          type: String
+          relational-persistence:
+            primary-key: true
+            autogenerated: true
+        - name: name
+          type: String
+          validations:
+            - type: NotEmpty      
+        - name: value
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: type 
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: severity
+          type: String
+          validations:
+            - type: NotEmpty   
+        - name: tag
+          type: String
+          validations:
+            - type: NotEmpty  
+        - name: security_category
+          type: String
+          validations:
+            - type: NotEmpty         
+        - name: created_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: updated_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: user_created_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: user_created_id
+            foreign-table: users        
+        - name: user_modified_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: user_modified_id
+            foreign-table: users        
+        - name: deleted
+          type: Boolean
+          validations:
+            - type: NotEmpty
+        - name: api_quality_confs_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: api_quality_confs_id
+            foreign-table: api_quality_confs
+    Api: 
+      relational-persistence:
+        table: apis
+      attributes:
+        - name: id
+          type: String
+          relational-persistence:
+            primary-key: true
+            autogenerated: true
+        - name: name
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: base_path
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: version
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: git_repository_url
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: type 
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: postman_collection_uri
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: created_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: updated_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: user_created_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: user_created_id
+            foreign-table: users        
+        - name: user_modified_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: user_modified_id
+            foreign-table: users        
+        - name: deleted
+          type: Boolean
+          validations:
+            - type: NotEmpty
+        - name: api_collections_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: api_collections_id
+            foreign-table: api_collections
+    Api_scanner: 
+      relational-persistence:
+        table: api_scanners
+      attributes:
+        - name: id
+          type: String
+          relational-persistence:
+            primary-key: true
+            autogenerated: true
+        - name: sonar_version
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: api_doc_url
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: results 
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: bugs 
+          type: String
+          validations:
+            - type: NotEmpty
+        - name: vulnerabilities 
+          type: String
+          validations:
+            - type: NotEmpty        
+        - name: created_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: updated_at
+          type: DateTime
+          validations:
+            - type: NotEmpty
+        - name: user_created_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: user_created_id
+            foreign-table: users        
+        - name: user_modified_id
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: user_modified_id
+            foreign-table: users        
+        - name: deleted
+          type: Boolean
+          validations:
+            - type: NotEmpty
+        - name: api_id 
+          type: String
+          validations:
+            - type: NotEmpty
+          relational-persistence:
+            foreign-column: api_id
+            foreign-table: apis
+  
+x-apigen-project:
+  name: Apiquality demo
+  description: Apiquality Demo API
+  version: 1.0.0
+  java-properties:
+    group-id: org.apiquality.demo
+    artifact-id: apiquality
